@@ -1,0 +1,45 @@
+
+<div class="board">
+  <div class="board-bar">
+    <p>
+      <span class="board-name ">Tickets </span>
+      <mat-checkbox class="chkTaskPanel" [(ngModel)]="isNewTicketPanelOpen">New Ticket Panel</mat-checkbox>
+    </p>
+  </div>
+
+
+  <mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav #sidenav mode="side" [(opened)]="isNewTicketPanelOpen">
+      <h1>
+        <strong>
+          Create New Ticket
+        </strong>
+      </h1>
+
+      
+      <br />
+      <mat-form-field>
+        <mat-label>Number of boxes</mat-label>
+        <input matInput name="boxCount" [(ngModel)]="boxCount">
+      </mat-form-field>
+      
+      <br />
+
+      <mat-checkbox class="chkTaskPanel" [(ngModel)]="isSuperzahlIncluded">Include Superzahl</mat-checkbox>
+      
+
+      <br>
+
+      <button mat-raised-button color="primary">Draw ticket</button>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content class="sidenav-content">
+      
+        <router-outlet></router-outlet>
+      
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>

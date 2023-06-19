@@ -1,0 +1,37 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="serialNumber">
+      <th mat-header-cell *matHeaderCellDef> Serial Number </th>
+      <td mat-cell *matCellDef="let element"> {{element.serialNumber}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="boxCount">
+      <th mat-header-cell *matHeaderCellDef> # of Boxes </th>
+      <td mat-cell *matCellDef="let element"> {{element.boxCount}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="hasSuperNumber">
+      <th mat-header-cell *matHeaderCellDef> Has Superzahl </th>
+      <td mat-cell *matCellDef="let element"> {{element.hasSuperNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" style="margin: 2px" (click)="openTicket(element)">Open</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page">
+  </mat-paginator>
+</div>
