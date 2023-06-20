@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { catchError, of, Subscription } from 'rxjs';
 import { TicketModel } from '../models/ticket.model';
 import { TicketListItemModel } from '../models/ticketListItem.model';
 import { TicketsService } from '../services/tickets.service';
@@ -18,19 +18,40 @@ export class TicketsListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  private sub: Subscription = null!;
+  private subFetchTicketsSource: Subscription = null!;
+  private subCreateTicketNotifications: Subscription = null!;
+  errorMsg: string | null = null;
 
   constructor(private router: Router, private ticketsService: TicketsService) {
+    this.subCreateTicketNotifications = this.ticketsService.ticketCreationNotifications$.subscribe(tCreated => {
+      if (tCreated)
+        this.loadTicketsList();
+    })
   }
 
   ngAfterViewInit() {
     if (!this.paginator)
       this.dataSource.paginator = this.paginator;
           
-    this.sub = this.ticketsService.getAllTickets()
-      .subscribe((list: TicketListItemModel[]) => {
-        console.log(list);
-        this.dataSource = new MatTableDataSource<TicketModel>(list);
+      this.loadTicketsList();
+  }
+
+  loadTicketsList() {
+
+    this.subFetchTicketsSource = this.ticketsService.getAllTickets()
+      .pipe(
+        catchError(err => of(false)))
+      .subscribe((list: TicketListItemModel[] | boolean) => {
+        if (list instanceof Array) {
+          this.errorMsg = null;
+          this.dataSource = new MatTableDataSource<TicketModel>(list);
+        }
+        else {
+          this.dataSource = new MatTableDataSource<TicketModel>([]);
+          this.errorMsg = 'Ticket loading failed';
+        }
+        
+        
       });
   }
 
@@ -40,7 +61,8 @@ export class TicketsListComponent implements AfterViewInit {
   }
 
   onDestroy() {
-    this.sub.unsubscribe();
+    if (this.subFetchTicketsSource) this.subFetchTicketsSource.unsubscribe();
+    if (this.subCreateTicketNotifications) this.subCreateTicketNotifications.unsubscribe();
   }
 }
 

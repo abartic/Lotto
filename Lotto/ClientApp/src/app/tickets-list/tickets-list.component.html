@@ -1,4 +1,6 @@
-<div class="mat-elevation-z8">
+<span *ngIf="errorMsg != null">{{errorMsg}}</span>
+
+<div class="mat-elevation-z8" *ngIf="errorMsg == null" >
   <table mat-table [dataSource]="dataSource">
 
 

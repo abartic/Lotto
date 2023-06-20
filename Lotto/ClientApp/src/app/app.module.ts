@@ -15,6 +15,7 @@ import { DemoMaterialModule } from './material.module';
 import { TicketsListComponent } from './tickets-list/tickets-list.component';
 import { TicketViewComponent } from './ticket-view/ticket-view.component';
 import { TicketsService } from './services/tickets.service';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TicketsService } from './services/tickets.service';
     BrowserAnimationsModule,
     DemoMaterialModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatChipsModule
   ],
   providers: [TicketsService],
   bootstrap: [AppComponent]

@@ -43,7 +43,7 @@ namespace Lotto.Handlers
                     ticketBox.Numbers = boxNumbers;
                 });
             if (command.hasSuperNumber)
-                ticket.SuperNumber = System.Convert.ToByte(new Random().Next(Config.LOTTO_MAX_NUMBER));
+                ticket.SuperNumber = System.Convert.ToByte(new Random().Next(Config.LOTTO_MAX_SUPERNUMBER));
 
             await ticketRepository.Create(ticket);
 

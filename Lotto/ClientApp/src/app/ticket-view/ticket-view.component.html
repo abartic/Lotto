@@ -1,24 +1,31 @@
-<ng-container *ngIf="ticket !== null">
+<button mat-raised-button color="primary" (click)="back()">Back to Tickets</button>
+<br />
 
-  <button mat-raised-button color="primary" (click)="back()">Back to Tickets</button>
+<ng-container *ngIf="ticket != null">
   <h1>Ticket #{{ticket.serialNumber}}</h1>
   <br />
   <ng-container *ngFor="let box of ticket.ticketBoxes;index as i">
 
     <div>
-      <p>Box #{{i}}</p>
+      <p>Box #{{i+1}}</p>
       <p>
         <span>
-          <ng-container *ngFor="let number of box.numbers;index as j">
-            <mat-chip disabled>{{number}}</mat-chip>
-          </ng-container>
+          <mat-chip-listbox>
+            <ng-container *ngFor="let number of box.numbers">
+              <mat-chip color="primary">{{number}}</mat-chip>
+            </ng-container>
+          </mat-chip-listbox>
         </span>
       </p>
     </div>
   </ng-container>
 
   <br />
-  <span>Superzahl: <mat-chip disabled>{{ticket.superNumber}}</mat-chip></span>
+  <span *ngIf="ticket.superNumber != null">Superzahl: <mat-chip color="accent">{{ticket.superNumber}}</mat-chip></span>
   <br />
-
 </ng-container>
+
+<span *ngIf="errorMsg != null">{{errorMsg}}</span>
+
+<br />
+<button mat-raised-button color="primary" (click)="back()">Back to Tickets</button>

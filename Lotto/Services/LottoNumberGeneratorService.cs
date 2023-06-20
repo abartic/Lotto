@@ -27,7 +27,7 @@ namespace Lotto.Services
                 allNumbers.RemoveAt(selectedIndex);
             }
 
-            return extractedNumbers.Select(n => (short)n).ToArray();
+            return extractedNumbers.Select(n => (short)n).OrderBy(n=>n).ToArray();
         }
 
         

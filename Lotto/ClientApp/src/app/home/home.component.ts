@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { catchError, of, Subscription } from 'rxjs';
 import { CreateTicketModel } from '../models/create-ticket.model';
 import { TicketModel } from '../models/ticket.model';
 import { TicketsService } from '../services/tickets.service';
@@ -19,20 +19,20 @@ export class HomeComponent {
   private sub: Subscription = null!;
   constructor(private router: Router, private ticketsService: TicketsService ) {
     
-    this.router.navigate(['tickets-list'], { });
+    this.router.navigate(['tickets-list'], {});
+    
   }
 
-  createTicket()
-  {
+  createTicket() {
     var ticketModel = new CreateTicketModel(this.boxCount, this.isSuperzahlIncluded);
     this.sub = this.ticketsService.createTicket(ticketModel)
-      .subscribe((createdTicket: TicketModel) => {
-
-        this.router.navigate(['tickets-list'], {});
-
-      }, (error) => {
-        
-        alert('Draw Ticket fadile!');
+      .pipe(
+        catchError(err => of(false)))
+      .subscribe((ticket : TicketModel | boolean) => {
+        if (ticket as TicketModel)
+          this.ticketsService.notifyTicketCreated();
+        else
+          alert('Create ticket failed!');
       });
   }
 

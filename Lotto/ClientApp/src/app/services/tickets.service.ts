@@ -1,15 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { CreateTicketModel } from '../models/create-ticket.model';
 import { TicketModel } from '../models/ticket.model';
 import { TicketListItemModel } from '../models/ticketListItem.model';
 import { ApiPathsService } from './api-paths.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TicketsService {
 
   constructor(private http: HttpClient, private apiPaths: ApiPathsService) { }
+
+  private ticketCreationSource = new Subject<boolean>();
+  ticketCreationNotifications$ = this.ticketCreationSource.asObservable();
 
   getAllTickets(): Observable<TicketListItemModel[]> {
     return this.http.get<any[]>(this.apiPaths.getAllTicketsRoute());
@@ -23,6 +26,8 @@ export class TicketsService {
     return this.http.post<TicketModel>(this.apiPaths.createTicketRoute(), model);
   }
 
-  
+  notifyTicketCreated() {
+    this.ticketCreationSource.next(true);
+  }
 }
 
