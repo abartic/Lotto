@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Lotto.Handlers
 {
-    public class GetTicketsHandler : IRequestHandler<GetTicketsQuery, IEnumerable<Ticket>>
+    public class GetTicketsHandler : IRequestHandler<GetTicketsQuery, IEnumerable<TicketListItem>>
     {
         private readonly ITicketRepository ticketRepository;
 
@@ -14,7 +14,10 @@ namespace Lotto.Handlers
             this.ticketRepository = ticketRepository;
         }
 
-        public async Task<IEnumerable<Ticket>> Handle(GetTicketsQuery request,
-            CancellationToken cancellationToken) => await ticketRepository.GetAll();
+        public async Task<IEnumerable<TicketListItem>> Handle(GetTicketsQuery request, CancellationToken cancellationToken) 
+        {
+            var tickets = await ticketRepository.GetAll();
+            return tickets.Select(t => new TicketListItem() {BoxCount = t.TicketBoxes.Count, SerialNumber = t.SerialNumber, HasSuperNumber = t.SuperNumber.HasValue });
+        }
     }
 }

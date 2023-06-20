@@ -1,7 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Ticket } from '../models/ticket.model';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { TicketModel } from '../models/ticket.model';
+import { TicketListItemModel } from '../models/ticketListItem.model';
+import { TicketsService } from '../services/tickets.service';
 
 @Component({
   selector: 'app-tickets-list',
@@ -10,30 +14,34 @@ import { Ticket } from '../models/ticket.model';
 })
 export class TicketsListComponent implements AfterViewInit {
   displayedColumns: string[] = ['serialNumber', 'boxCount', 'hasSuperNumber', 'operations'];
-  dataSource = new MatTableDataSource<Ticket>(ELEMENT_DATA);
+  dataSource: MatTableDataSource<TicketModel> = null!;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor() {
-    
+  private sub: Subscription = null!;
+
+  constructor(private router: Router, private ticketsService: TicketsService) {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    if (!this.paginator)
+      this.dataSource.paginator = this.paginator;
+          
+    this.sub = this.ticketsService.getAllTickets()
+      .subscribe((list: TicketListItemModel[]) => {
+        console.log(list);
+        this.dataSource = new MatTableDataSource<TicketModel>(list);
+      });
   }
 
-  openTicket(element: Ticket)
+  openTicket(element: TicketModel)
   {
+    this.router.navigate(['ticket-view'], { queryParams: { serialNumber: element.serialNumber } });
+  }
 
+  onDestroy() {
+    this.sub.unsubscribe();
   }
 }
 
-const ELEMENT_DATA: Ticket[] = [
-  { serialNumber: '1', boxCount: 12, hasSuperNumber: true },
-  { serialNumber: '2', boxCount: 12, hasSuperNumber: true },
-  { serialNumber: '3', boxCount: 12, hasSuperNumber: true },
-  { serialNumber: '4', boxCount: 12, hasSuperNumber: true },
-  { serialNumber: '5', boxCount: 12, hasSuperNumber: false },
-  { serialNumber: '6', boxCount: 10, hasSuperNumber: false },
 
-];

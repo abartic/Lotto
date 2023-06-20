@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Lotto.Queries
 {
-    public record GetTicketsQuery() : IRequest<IEnumerable<Ticket>>;
+    public record GetTicketsQuery() : IRequest<IEnumerable<TicketListItem>>;
 }

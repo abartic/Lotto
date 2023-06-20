@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { CreateTicketModel } from '../models/create-ticket.model';
+import { TicketModel } from '../models/ticket.model';
+import { TicketsService } from '../services/tickets.service';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +16,27 @@ export class HomeComponent {
   public isSuperzahlIncluded: boolean = true;
   public boxCount: number = 12;
 
-  router!: Router;
-  constructor(router: Router) {
-
-    this.router = router;
+  private sub: Subscription = null!;
+  constructor(private router: Router, private ticketsService: TicketsService ) {
+    
     this.router.navigate(['tickets-list'], { });
+  }
+
+  createTicket()
+  {
+    var ticketModel = new CreateTicketModel(this.boxCount, this.isSuperzahlIncluded);
+    this.sub = this.ticketsService.createTicket(ticketModel)
+      .subscribe((createdTicket: TicketModel) => {
+
+        this.router.navigate(['tickets-list'], {});
+
+      }, (error) => {
+        
+        alert('Draw Ticket fadile!');
+      });
+  }
+
+  onDestroy() {
+    this.sub.unsubscribe();
   }
 }

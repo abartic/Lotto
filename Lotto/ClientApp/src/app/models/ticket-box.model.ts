@@ -1,5 +1,5 @@
-export class TicketBox {
+export class TicketBoxModel {
 
 
-  public constructor(public numbers: number[]) { }
+  public constructor(public numbers: number[], public superNumber?: number) { }
 }

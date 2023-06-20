@@ -1,8 +1,8 @@
-import { TicketBox } from "./ticket-box.model";
+import { TicketBoxModel } from "./ticket-box.model";
 
-export class Ticket {
+export class TicketModel {
 
-  public constructor(public serialNumber: string, public boxCount: number, public hasSuperNumber?: boolean, public ticketBoxes?: TicketBox[]) { }
+  public constructor(public serialNumber: string, public superNumber?: number, public ticketBoxes?: TicketBoxModel[]) { }
 
   
   

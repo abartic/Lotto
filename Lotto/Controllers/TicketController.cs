@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Lotto.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class TicketController : ControllerBase
     {
 
@@ -35,9 +35,9 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromQuery] byte boxCount, [FromQuery] bool hasSuperNumber)
+        public async Task<ActionResult> Create(GenerateTicketCommand command)
         {
-            var ticketToReturn = await mediator.Send(new GenerateTicketCommand(boxCount, hasSuperNumber));
+            var ticketToReturn = await mediator.Send(command);
             return CreatedAtRoute("GetTicketBySerialNumber", new { serialNumber = ticketToReturn.SerialNumber }, ticketToReturn);
 
            

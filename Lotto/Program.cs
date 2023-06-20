@@ -1,6 +1,7 @@
 using Lotto.Data;
 using Lotto.Services;
 using Serilog;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,19 @@ builder.Host.UseSerilog((hostingContext, services, loggerConfiguration) =>
     loggerConfiguration.WriteTo.Console();
 
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(conf =>
+    {
+        conf.AllowAnyMethod();
+        conf.AllowAnyHeader();
+        conf.SetIsOriginAllowed(conf => true);
+    });
+});
 builder.Services.AddControllersWithViews()
-    .AddJsonOptions(options => {
-        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.Strict;
     });
 
@@ -44,7 +54,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
