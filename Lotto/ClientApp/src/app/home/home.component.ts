@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, Subscription } from 'rxjs';
-import { CreateTicketModel } from '../models/create-ticket.model';
+import { CreateTicketModel } from '../models/createTicket.model';
 import { TicketModel } from '../models/ticket.model';
 import { TicketsService } from '../services/tickets.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
