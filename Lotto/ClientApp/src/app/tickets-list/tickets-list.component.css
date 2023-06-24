@@ -1,3 +1,9 @@
+.ticket-list-root {
+  margin: 20px;
+  padding-left: 20px;
+}
+
 table {
   width: 100%;
 }
+

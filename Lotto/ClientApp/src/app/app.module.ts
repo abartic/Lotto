@@ -16,6 +16,8 @@ import { TicketsListComponent } from './tickets-list/tickets-list.component';
 import { TicketViewComponent } from './ticket-view/ticket-view.component';
 import { TicketsService } from './services/tickets.service';
 import { MatChipsModule } from '@angular/material/chips';
+import { NewTicketDialog } from './new-ticket/new-ticket-dialog.component';
+import { TicketFormComponent } from './ticket-form/ticket-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { MatChipsModule } from '@angular/material/chips';
     NavMenuComponent,
     HomeComponent,
     TicketsListComponent,
-    TicketViewComponent
+    TicketViewComponent,
+    NewTicketDialog,
+    TicketFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

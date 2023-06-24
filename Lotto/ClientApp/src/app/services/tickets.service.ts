@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CreateTicketModel } from '../models/create-ticket.model';
+import { CreateTicketModel } from '../models/createTicket.model';
 import { TicketModel } from '../models/ticket.model';
 import { TicketListItemModel } from '../models/ticketListItem.model';
 import { ApiPathsService } from './api-paths.service';

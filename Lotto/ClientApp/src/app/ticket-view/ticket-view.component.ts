@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, Subscription } from 'rxjs';

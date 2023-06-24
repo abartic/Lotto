@@ -16,7 +16,7 @@ export class TicketsListComponent implements AfterViewInit {
   displayedColumns: string[] = ['serialNumber', 'boxCount', 'hasSuperNumber', 'operations'];
   dataSource: MatTableDataSource<TicketModel> = null!;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  /*@ViewChild(MatPaginator) paginator!: MatPaginator;*/
 
   private subFetchTicketsSource: Subscription = null!;
   private subCreateTicketNotifications: Subscription = null!;
@@ -30,8 +30,8 @@ export class TicketsListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.paginator)
-      this.dataSource.paginator = this.paginator;
+    //if (!this.paginator)
+    //  this.dataSource.paginator = this.paginator;
           
       this.loadTicketsList();
   }

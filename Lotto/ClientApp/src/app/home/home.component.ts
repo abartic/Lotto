@@ -4,6 +4,8 @@ import { catchError, of, Subscription } from 'rxjs';
 import { CreateTicketModel } from '../models/create-ticket.model';
 import { TicketModel } from '../models/ticket.model';
 import { TicketsService } from '../services/tickets.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NewTicketDialog } from '../new-ticket/new-ticket-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,7 @@ export class HomeComponent {
   public boxCount: number = 12;
 
   private sub: Subscription = null!;
-  constructor(private router: Router, private ticketsService: TicketsService ) {
+  constructor(private router: Router, private ticketsService: TicketsService, public dialog: MatDialog ) {
     
     this.router.navigate(['tickets-list'], {});
     
@@ -29,10 +31,18 @@ export class HomeComponent {
       .pipe(
         catchError(err => of(false)))
       .subscribe((ticket : TicketModel | boolean) => {
-        if (ticket as TicketModel)
+        if (ticket as TicketModel) {
           this.ticketsService.notifyTicketCreated();
-        else
+
+          this.dialog.open(NewTicketDialog, {
+            enterAnimationDuration: '500ms',
+            exitAnimationDuration: '500ms',
+            data: ticket as TicketModel
+          });
+        }
+        else {
           alert('Create ticket failed!');
+        }
       });
   }
 
