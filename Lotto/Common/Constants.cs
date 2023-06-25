@@ -1,6 +1,6 @@
 ﻿namespace Lotto.Common
 {
-    public static class Config
+    public static class Constants
     {
         public const byte LOTTO_MIN_NUMBER = 1;
         public const byte LOTTO_MAX_NUMBER = 49;

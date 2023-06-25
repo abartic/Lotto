@@ -1,4 +1,4 @@
-import { TicketBoxModel } from "./ticket-box.model";
+
 
 export class CreateTicketModel {
 

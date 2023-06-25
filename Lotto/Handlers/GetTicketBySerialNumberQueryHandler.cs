@@ -5,11 +5,11 @@ using MediatR;
 
 namespace Lotto.Handlers
 {
-    public class GetTicketBySerialNumberHandler : IRequestHandler<GetTicketBySerialNumberQuery, Ticket>
+    public class GetTicketBySerialNumberQueryHandler : IRequestHandler<GetTicketBySerialNumberQuery, Ticket>
     {
         private readonly ITicketRepository ticketRepository;
 
-        public GetTicketBySerialNumberHandler(ITicketRepository ticketRepository)
+        public GetTicketBySerialNumberQueryHandler(ITicketRepository ticketRepository)
         {
             this.ticketRepository = ticketRepository;
         }

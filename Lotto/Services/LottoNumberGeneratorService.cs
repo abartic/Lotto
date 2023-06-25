@@ -14,11 +14,11 @@ namespace Lotto.Services
 
         public async Task<short[]> GenerateTicketBoxNumbers()
         {
-            List<int> allNumbers = Enumerable.Range(Config.LOTTO_MIN_NUMBER, Config.LOTTO_MAX_NUMBER).ToList();
+            List<int> allNumbers = Enumerable.Range(Constants.LOTTO_MIN_NUMBER, Constants.LOTTO_MAX_NUMBER).ToList();
 
             List<int> extractedNumbers = new List<int>();
 
-            for (int i = 1; i <= Config.LOTTO_EXTRACTED_NUMBERS; i++)
+            for (int i = 1; i <= Constants.LOTTO_EXTRACTED_NUMBERS; i++)
             {
                 var selectedIndex = await Task.Run<int>(() => { return allNumbers.Count == 1 ? 0 : new Random().Next() % allNumbers.Count; });
                 this.logger.LogInformation($"{(new Random().Next()) % allNumbers.Count}");
