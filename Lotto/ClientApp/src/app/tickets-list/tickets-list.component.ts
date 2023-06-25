@@ -15,8 +15,8 @@ import { TicketsService } from '../services/tickets.service';
 export class TicketsListComponent implements AfterViewInit {
   displayedColumns: string[] = ['serialNumber', 'boxCount', 'hasSuperNumber', 'operations'];
   dataSource: MatTableDataSource<TicketModel> = null!;
-
-  /*@ViewChild(MatPaginator) paginator!: MatPaginator;*/
+  ticketList: TicketListItemModel[] = null!;
+  
 
   private subFetchTicketsSource: Subscription = null!;
   private subCreateTicketNotifications: Subscription = null!;
@@ -30,8 +30,6 @@ export class TicketsListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    //if (!this.paginator)
-    //  this.dataSource.paginator = this.paginator;
           
       this.loadTicketsList();
   }
@@ -44,13 +42,13 @@ export class TicketsListComponent implements AfterViewInit {
       .subscribe((list: TicketListItemModel[] | boolean) => {
         if (list instanceof Array) {
           this.errorMsg = null;
-          this.dataSource = new MatTableDataSource<TicketModel>(list);
+          this.ticketList = list;
         }
         else {
-          this.dataSource = new MatTableDataSource<TicketModel>([]);
+          this.ticketList = [];
           this.errorMsg = 'Ticket loading failed';
         }
-        
+        this.dataSource = new MatTableDataSource<TicketModel>(this.ticketList);
         
       });
   }

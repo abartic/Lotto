@@ -1,11 +1,11 @@
 <div class="ticket-view-root">
-  <button mat-raised-button color="primary" (click)="back()">Back to Tickets List</button>
-  <br />
+  <button class="back-button" mat-raised-button color="primary" (click)="back()">Back to Tickets List</button>
+  
 
   <app-ticket-form [ticket]="ticket"></app-ticket-form>
 
   <span *ngIf="errorMsg != null">{{errorMsg}}</span>
 
-  <br />
-  <button mat-raised-button color="primary" (click)="back()">Back to Tickets List</button>
+  
+  <button class="back-button" mat-raised-button color="primary" (click)="back()">Back to Tickets List</button>
 </div>

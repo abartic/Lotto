@@ -26,6 +26,13 @@ export class HomeComponent {
   }
 
   createTicket() {
+
+    if (this.boxCount > 12)
+    {
+      alert("Number of boxes between 1 and 12!")
+      return;
+    }
+
     var ticketModel = new CreateTicketModel(this.boxCount, this.isSuperzahlIncluded);
     this.sub = this.ticketsService.createTicket(ticketModel)
       .pipe(
