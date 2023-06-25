@@ -20,11 +20,13 @@ namespace Lotto.Services
 
             for (int i = 1; i <= Constants.LOTTO_EXTRACTED_NUMBERS; i++)
             {
+                //extract numbers by index, so avoiding generating same number multiple times per box
                 var selectedIndex = await Task.Run<int>(() => { return allNumbers.Count == 1 ? 0 : new Random().Next() % allNumbers.Count; });
-                this.logger.LogInformation($"{(new Random().Next()) % allNumbers.Count}");
                 extractedNumbers.Add(allNumbers[selectedIndex]);
 
                 allNumbers.RemoveAt(selectedIndex);
+
+                this.logger.LogInformation($"{(new Random().Next()) % allNumbers.Count}");
             }
 
             return extractedNumbers.Select(n => (short)n).OrderBy(n=>n).ToArray();
